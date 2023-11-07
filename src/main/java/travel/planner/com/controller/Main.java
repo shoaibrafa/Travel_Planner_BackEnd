@@ -38,7 +38,7 @@ public class Main {
 
 
     /**
-     * This end point returns City.
+     * This end point returns a specific City by city name.
      */
     @GetMapping("/getcity/{city_name}")
     public City getCity(@PathVariable String city_name){
