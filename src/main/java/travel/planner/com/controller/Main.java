@@ -49,15 +49,15 @@ public class Main {
     /**
      * This end point is responsible to return the related image
      * of the city as byte array.
-     * @param city rtwrtq
+     * @param city
      * @return
      * @throws IOException
      */
     @GetMapping("/image/{city}")
     public ResponseEntity<byte[]> getImage(@PathVariable String city) throws IOException {
-        String paths = "src/main/resources/static/images/" + city.toLowerCase() + ".jpg";
+        String path = "src/main/resources/static/images/" + city.toLowerCase() + ".jpg";
 
-        Resource imageResource = new FileSystemResource(paths);
+        Resource imageResource = new FileSystemResource(path);
         if (!imageResource.exists()) {
             return null;
         }
