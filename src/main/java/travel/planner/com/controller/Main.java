@@ -1,8 +1,11 @@
 package travel.planner.com.controller;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +17,10 @@ import travel.planner.com.model.WeatherDTO;
 import travel.planner.com.service.TPService;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 
@@ -53,15 +59,37 @@ public class Main {
      * @return
      * @throws IOException
      */
+//    @GetMapping("/image/{city}")
+//    public ResponseEntity<byte[]> getImage(@PathVariable String city) throws IOException {
+//        String imageName = city.toLowerCase() + ".jpg";
+//
+//        Resource image = new ClassPathResource("static/images/" + imageName);
+//
+//
+//        if (!image.exists()) {
+//            return null;
+//        }
+//        byte[] imageBytes = Files.readAllBytes(image.getFile().toPath());
+//        MediaType contentType = MediaType.IMAGE_JPEG;
+//
+//        return ResponseEntity.ok()
+//                .contentType(contentType)
+//                .body(imageBytes);
+//    }
+
+
     @GetMapping("/image/{city}")
     public ResponseEntity<byte[]> getImage(@PathVariable String city) throws IOException {
-        String path = "src/main/resources/static/images/" + city.toLowerCase() + ".jpg";
+        String imageName = city.toLowerCase() + ".jpg";
 
-        Resource imageResource = new FileSystemResource(path);
-        if (!imageResource.exists()) {
+        Resource image = new ClassPathResource("static/images/" + imageName);
+
+        if (!image.exists()) {
             return null;
         }
-        byte[] imageBytes = Files.readAllBytes(imageResource.getFile().toPath());
+
+        InputStream in = image.getInputStream();
+        byte[] imageBytes = IOUtils.toByteArray(in);
         MediaType contentType = MediaType.IMAGE_JPEG;
 
         return ResponseEntity.ok()

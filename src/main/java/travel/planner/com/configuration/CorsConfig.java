@@ -20,7 +20,8 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200")
+//                        .allowedOrigins("http://localhost:4200")
+                        .allowedOrigins("http://travelplanner2.s3-website.ca-central-1.amazonaws.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowCredentials(false)
                         .maxAge(3600);
